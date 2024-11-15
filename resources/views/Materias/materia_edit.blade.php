@@ -20,19 +20,19 @@
         <form action="{{route('materia.update')}}" method="POST">
             @csrf
             <div class="mb-3">
-                <input type="hidden" name="id" value="{{ old('id', $Materias->id) }}">
+                <input type="hidden" name="id" value="{{ old('id', $materias->id) }}">
                 <label for="exampleInputPassword1" class="form-label">Ingresa los datos a editar:</label>
                 <br><label for="">Nombre:</label>
                 <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">1</span>
-                        <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $Materias->nombre) }}"  placeholder="{{ $Materias-> nombre }}" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $materias->nombre) }}"  placeholder="{{ $materias-> nombre }}" aria-describedby="basic-addon1">
                     </div>
             </div>
             <div class="mb-3">
                 <label for="">Descripcion:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">2</span>
-                    <input type="text" class="form-control" name="descripcion" value="{{ old('nombre', $Materias->descripcion) }}" placeholder="{{ $Materias-> descripcion }}" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" name="descripcion" value="{{ old('nombre', $materias->descripcion) }}" placeholder="{{ $materias-> descripcion }}" aria-describedby="basic-addon1">
                 </div>
             </div>
             <label for="">Cuatrimestre:</label>
@@ -41,7 +41,7 @@
                 
                 <label class="input-group-text" for="inputGroupSelect01">3</label>
                     <select class="form-select" id="inputGroupSelect01" name="cuatrimestre">
-                        <option selected >{{ $Materias-> cuatrimestre }}</option>
+                        <option selected >{{ $materias-> cuatrimestre }}</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">2</option>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Materia;
+use App\Models\materia;
 use Illuminate\Http\Request;
 
 class MateriaController extends Controller
@@ -9,7 +9,7 @@ class MateriaController extends Controller
     
     public function index(){
         
-        $materias = Materia::all(); 
+        $materias = materia::all(); 
         return view(view: 'Materias/materias_index', data: compact(var_name: 'materias'));
     }
     // Guardar la nueva materia
@@ -20,18 +20,18 @@ class MateriaController extends Controller
             'descripcion' => 'nullable|string|max:255',
             'cuatrimestre' => 'nullable|integer'
         ]);
-        $Materia1 = new Materia();
+        $Materia1 = new materia();
         $Materia1->nombre = $request->nombre;
         $Materia1->descripcion = $request->descripcion;
         $Materia1->cuatrimestre = $request->cuatrimestre;
         $Materia1->save();
-        $materias = Materia::all(); 
+        $materias = materia::all(); 
         return view(view: 'Materias/materias_index', data: compact(var_name: 'materias'));
     }
 
     public function show($id){
-        $Materias = Materia::find($id);
-        return view(view:'Materias/materia_edit', data: compact('Materias'));
+        $materias = materia::find($id);
+        return view(view:'Materias/materia_edit', data: compact('materias'));
     }
 
     // Actualizar la información de la materia
@@ -42,23 +42,23 @@ class MateriaController extends Controller
             'descripcion' => 'nullable|string|max:255',
             'cuatrimestre' => 'nullable|integer'
         ]);
-        $materia = Materia::findOrFail($request->id);
+        $materia = materia::findOrFail($request->id);
         $materia->nombre = $request->nombre;
         $materia->descripcion = $request->descripcion;
         $materia->cuatrimestre = $request->cuatrimestre;
         $materia->save();
         //return $materia;
-        $materias = Materia::all(); 
+        $materias = materia::all(); 
         return view(view: 'Materias/materias_index', data: compact(var_name: 'materias'));
     }
 
     // Eliminar una materia
     public function destroy(Request $request){
     
-        $materia1 = Materia::findOrFail($request->id);
+        $materia1 = materia::findOrFail($request->id);
         $materia1->delete(); // Eliminar la materia
 
-        $materias = Materia::all(); 
+        $materias = materia::all(); 
         return view(view: 'Materias/materias_index', data: compact(var_name: 'materias'));
     }
 

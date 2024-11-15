@@ -32,7 +32,7 @@ class MaestrosController extends Controller
         ]);
     
         // Crear el nuevo maestro
-        $Maestro1 = new Maestro();
+        $Maestro1 = new maestro();
         $Maestro1->nombre = $request->nombre;
         $Maestro1->apellido = $request->apellido;
         $Maestro1->edad = $request->edad;
@@ -42,14 +42,14 @@ class MaestrosController extends Controller
     
         // Ahora que el maestro está guardado, agregamos las materias seleccionadas
         foreach ($request->materias as $materiaId) {
-            $ProfesorMateria = new ProfesorMateria();
+            $ProfesorMateria = new profesorMateria();
             $ProfesorMateria->maestro_id = $Maestro1->id;  // Usar el ID del maestro recién creado
             $ProfesorMateria->materia_id = $materiaId;      // Asignar la materia seleccionada
             $ProfesorMateria->save();                       // Guardar la relación
         }
     
         // Obtener todos los maestros con sus materias
-        $maestros = Maestro::with('materias')->get();
+        $maestros = maestro::with('materias')->get();
     
         // Pasar los datos a la vista
         return view('Maestros/Maestros_index', compact('maestros'));
@@ -57,7 +57,7 @@ class MaestrosController extends Controller
     
 
     public function listado(){
-        $maestros = Maestro::with('materias')->get();
+        $maestros = maestro::with('materias')->get();
         return view('Maestros/Maestros_index', compact('maestros'));
     }
 
@@ -77,7 +77,7 @@ class MaestrosController extends Controller
             'edad' => 'required|integer',
             'genero' => 'nullable|string|max:20',
             'tel' => 'nullable',
-            'materias' => 'required|array', // Aseguramos que se seleccionen materias
+            //'materias' => 'required|array', // Aseguramos que se seleccionen materias
         ]);
     
         $maestro1 = maestro::findOrFail($request->id);
@@ -89,21 +89,26 @@ class MaestrosController extends Controller
         $maestro1->save(); // Guarda el maestro y genera un ID
 
     // Eliminar todas las materias asignadas previamente
-    ProfesorMateria::where('maestro_id', $maestro1->id)->delete();
+    profesorMateria::where('maestro_id', $maestro1->id)->delete();
 
-    // Agregar las nuevas materias seleccionadas
+    // Ahora que el maestro está guardado, agregamos las materias seleccionadas
+    if($request->materias != null){
+    
     foreach ($request->materias as $materiaId) {
-        $ProfesorMateria = new ProfesorMateria();
-        $ProfesorMateria->maestro_id = $maestro1->id;  // Asignar el ID del maestro
-        $ProfesorMateria->materia_id = $materiaId;      // Asignar el ID de la materia
-        $ProfesorMateria->save();                       // Guardar la relación
+        $ProfesorMateria = new profesorMateria();
+        $ProfesorMateria->maestro_id = $maestro1->id;  // Usar el ID del maestro recién creado
+        $ProfesorMateria->materia_id = $materiaId;      // Asignar la materia seleccionada
+        $ProfesorMateria->save(); 
+    }}                   // Guardar la relación
+    
 
     // Obtener todos los maestros con sus materias
-    $maestros = Maestro::with('materias')->get();
+    $maestros = maestro::with('materias')->get();
 
-        $maestros = Maestro::with('materias')->get();
-        return view('Maestros/Maestros_index', compact('maestros'));
-    }}
+    // Pasar los datos a la vista
+    return view('Maestros/Maestros_index', compact('maestros'));
+
+    }
 
      // Eliminar un profesor
      public function destroy(Request $request)
@@ -117,11 +122,11 @@ class MaestrosController extends Controller
          }
      
          // Encuentra y elimina el maestro en la tabla maestro
-         $maestro = Maestro::findOrFail($request->id);
+         $maestro = maestro::findOrFail($request->id);
          $maestro->delete();
      
          // Obtiene todas las materias y redirige a la vista de materias
-         $maestros = Maestro::all(); 
+         $maestros = maestro::all(); 
          return view('Maestros/Maestros_index', compact('maestros'));
      }
      

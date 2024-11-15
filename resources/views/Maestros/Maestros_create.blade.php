@@ -68,7 +68,6 @@
                         @foreach ($materias as $materia)
                         <tr>
                             <th scope="row">{{ $materia->id }}</th>
-                            
                             <td>
                                 <!-- Checkbox para seleccionar materias -->
                                 <div class="form-check form-check-inline">
